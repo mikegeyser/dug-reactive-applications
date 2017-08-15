@@ -1,7 +1,7 @@
 # Building Reactive Applications with Angular, RxJS and Socket.IO
-<img align="left" src="http://www.wethinkcode.co.za/assets/wethinkcode-logo-blue-76a0a747b9dc27dafc3a62735f23f14d1d13c4ebe578a7bc97819b888bce892c.png">
+<img align="left" src="https://secure.meetupstatic.com/photos/event/c/5/3/2/global_166130482.jpeg">
 
-A talk for the We Think Code_ students on 13 June 2017
+A talk for the Developer User Group on 16 August 2017
 
 We have been building client-server web applications using the same paradigms since bellbottoms, disco and IBM were popular. Everything since then has been a rehash of RPC and Request-Response, with JSON + REST being just the latest incarnation. We can do better. We now have the tools available to challenge those paradigms and build a new breed of application. Using reactive programming techniques and data streaming we can easily build rich, reactive web applications. 
 This code-oriented talk will show how to use Socket.IO to stream data to an Angular application. It will cover websocket basics, RxJS and working observables, as well as how it all seamlessly fits into Angular’s data-binding. 
@@ -11,7 +11,7 @@ This code-oriented talk will show how to use Socket.IO to stream data to an Angu
 # Set up the server
 
 ### server/index.js
-> # wtc_express
+> # dug_express
 ``` javascript
 var app = require('express')();
 var server = require('http').createServer(app);
@@ -20,7 +20,7 @@ var io = require('socket.io')(server);
 server.listen(3000);
 ```
 
-> # wtc_ping
+> # dug_ping
 ```js
 setInterval(() => io.emit('ping'), 3000);
 ```
@@ -43,7 +43,7 @@ declare let io: any;
 ```ts 
 shouldPing = false;
 ```
-> # wtc_ping1
+> # dug_ping1
 ```ts
 let socket = io('http://localhost:3000/');
 socket.on('ping', (ping) => {
@@ -53,7 +53,7 @@ socket.on('ping', (ping) => {
 ```
 
 ### app/src/app/ping/ping.component.html
-> # wtc_ping
+> # dug_ping
 ```html
 <div class="dot" [class.ping]="shouldPing"></div>
 ```
@@ -61,18 +61,18 @@ socket.on('ping', (ping) => {
 # Change the ping component
 
 ### app/src/app/ping/ping.component.ts
-> # wtc_ping_imports
+> # dug_ping_imports
 ```ts
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/debounceTime';
 ```
 
-> # wtc_ping_subject
+> # dug_ping_subject
 ```ts
 shouldPing = new BehaviorSubject(false);
 ```
 
-> # wtc_ping_2
+> # dug_ping_2
 ```ts
 socket.on('ping', () => this.shouldPing.next(true));
 
@@ -100,7 +100,7 @@ providers: [StreamService],
 ```
 
 ### app/src/app/stream.service.ts
-> # wtc_service_1
+> # dug_service_1
 ```ts
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -125,7 +125,7 @@ export class StreamService {
 ```
 
 ### app/src/app/ping/ping.component.ts
-> # wtc_ping_3
+> # dug_ping_3
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { StreamService } from '../stream.service';
@@ -145,7 +145,7 @@ export class PingComponent {
 
 # Add twitter streaming to the server
 ### server/index.js
-> # wtc_twitter_config
+> # dug_twitter_config
 ```js
 let Twit = require('twit');
 let T = new Twit({
@@ -157,7 +157,7 @@ let T = new Twit({
 });
 ```
 
-> # wtc_twitter_stream
+> # dug_twitter_stream
 ```js
 let stream = T.stream('statuses/filter', {
   track: [
@@ -168,7 +168,7 @@ let stream = T.stream('statuses/filter', {
 });
 ```
 
-> # wtc_tweet_emit
+> # dug_tweet_emit
 ```js
 stream.on('tweet', (status) => {
   console.log(status);
@@ -176,7 +176,7 @@ stream.on('tweet', (status) => {
 });
 ```
 
-> # wtc_tweet_store
+> # dug_tweet_store
 ```js
 let tweets = [];
 stream.on('tweet', (status) => {
@@ -189,7 +189,7 @@ stream.on('tweet', (status) => {
 });
 ```
 
-> # wtc_get_all
+> # dug_get_all
 ```js
 var cors = require('cors');
 app.use(cors())
@@ -198,7 +198,7 @@ app.get('/tweets', (request, response) => response.send(tweets));
 
 # Add twitter streaming to the app service
 ### app/src/app/stream.service.ts
-> # wtc_service_tweet_import
+> # dug_service_tweet_import
 ```ts
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -213,12 +213,12 @@ tweets = new BehaviorSubject([]);
 constructor(http: Http) {
 ```
 
-># wtc_service_tweet_1
+># dug_service_tweet_1
 ```ts
 let get = http.get('http://localhost:3000/tweets').map(response => response.json());
 ```
 
-> # wtc_service_tweet_2
+> # dug_service_tweet_2
 ```ts
 let emit = Observable.create(observer => {
   socket.on('tweet', (tweet) => {
@@ -227,12 +227,12 @@ let emit = Observable.create(observer => {
 });
 ```
 
-> # wtc_service_tweet_3
+> # dug_service_tweet_3
 ```ts
 get.subscribe(tweets => this.tweets.next(tweets));
 ```
 
-> # wtc_service_tweet_4
+> # dug_service_tweet_4
 ```ts
 emit.subscribe(tweet => {
   let tweets = this.tweets.value;
@@ -251,14 +251,14 @@ emit.subscribe(tweet => {
 import { StreamService } from './stream.service';
 ```
 
-> # wtc_app_1
+> # dug_app_1
 ```ts
 constructor(public stream: StreamService) { }
 ```
 
 # Add some initial markup to the app component
 ### app/src/app/app.component.html
-> # wtc_app_1
+> # dug_app_1
 ```ts
 <div *ngFor="let tweet of stream.tweets | async">
   {{tweet.text}}
@@ -280,7 +280,7 @@ import { Component, Input, OnInit } from '@angular/core';
 ```
 
 ### app/src/app/tweet/tweet.component.html
-> # wtc_tweet
+> # dug_tweet
 ```html
 <div class="EmbeddedTweet">
   <div class="EmbeddedTweet-tweet">
@@ -311,7 +311,7 @@ import { Component, Input, OnInit } from '@angular/core';
 ```
 
 ### app/src/app/app.component.html
-> # wtc_app_2
+> # dug_app_2
 ```html
 <app-tweet *ngFor="let tweet of stream.tweets | async" [tweet]="tweet">
 </app-tweet>
@@ -319,18 +319,18 @@ import { Component, Input, OnInit } from '@angular/core';
 
 # Add some flair (and show observable subscriptions)
 ### app/src/app/app.component.ts
-> # wtc_app_declare_masonry
+> # dug_app_declare_masonry
 ```ts
 declare let Masonry: any;
 ```
-> # wtc_app_new_masonry
+> # dug_app_new_masonry
 ```ts
 var masonry = new Masonry('app-root', {
   itemSelector: '.EmbeddedTweet'
 });
 ```
 
-> # wtc_app_masonry_subscribe
+> # dug_app_masonry_subscribe
 ```ts
 this.stream.tweets.debounceTime(1).subscribe(x => {
   masonry.reloadItems();

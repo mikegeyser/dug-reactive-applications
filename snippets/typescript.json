@@ -15,7 +15,7 @@
 	}
 */
 	"Ping socket - part 1": {
-		"prefix": "gdg_ping_1",
+		"prefix": "dug_ping_1",
 		"body": [
 			"let socket = io('http://localhost:3000/');",
 			"socket.on('ping', (ping) => {",
@@ -26,14 +26,14 @@
 		"description": "Ping socket - part 1"
 	},
 	"Ping socket - subject": {
-		"prefix": "gdg_ping_subject",
+		"prefix": "dug_ping_subject",
 		"body": [
 			"shouldPing = new BehaviorSubject(false);"
 		],
 		"description": "Ping socket - subject"
 	},
 	"Ping socket - part 2": {
-		"prefix": "gdg_ping_2",
+		"prefix": "dug_ping_2",
 		"body": [
 			"socket.on('ping', () => this.shouldPing.next(true));",
 			"",
@@ -44,7 +44,7 @@
 		"description": "Ping socket - part 2"
 	},
 	"Ping socket - RxJS imports": {
-		"prefix": "gdg_ping_imports",
+		"prefix": "dug_ping_imports",
 		"body": [
 			"import { BehaviorSubject } from 'rxjs/BehaviorSubject';",
 			"import 'rxjs/add/operator/debounceTime';"
@@ -52,7 +52,7 @@
 		"description": "Ping socket - RxJS imports"
 	},
 	"Stream service initial": {
-		"prefix": "gdg_service_1",
+		"prefix": "dug_service_1",
 		"body": [
 			"import { Injectable, OnInit } from '@angular/core';",
 			"import { BehaviorSubject } from 'rxjs/BehaviorSubject';",
@@ -78,7 +78,7 @@
 		"description": "Stream service initial"
 	},
 	"Full ping component": {
-		"prefix": "gdg_ping_3",
+		"prefix": "dug_ping_3",
 		"body": [
 			"import { Component, OnInit } from '@angular/core';",
 			"import { StreamService } from '../stream.service';",
@@ -98,7 +98,7 @@
 		"description": "Full ping component"
 	},
 	"Twitter service imports": {
-		"prefix": "gdg_service_tweet_import",
+		"prefix": "dug_service_tweet_import",
 		"body": [
 			"import { Http } from '@angular/http';",
 			"import { Observable } from 'rxjs/Observable';",
@@ -106,58 +106,62 @@
 		],
 		"description": "Twitter service imports"
 	},
-	"Twitter with explicit observable": {
-		"prefix": "gdg_service_tweet_1",
+	"Get all tweets from api": {
+		"prefix": "dug_service_tweet_1",
 		"body": [
-			"this.tweets = Observable.create((observer) => {",
-			" let tweets = [];",
-			" socket.on('tweet', (tweet) => {",
-			"   tweets.unshift(tweet);",
-			"",
-			"   if (tweets.length > 100)",
-			"     tweets.splice(100);",
-			"",
-			"   observer.next(tweets);",
-			" });",
-			"});"
+			"let get = http.get('http://localhost:3000/tweets').map(response => response.json());"
 		],
-		"description": "Twitter with explicit observable"
+		"description": "Get all tweets from api"
 	},
-	"Twitter with merge map": {
-		"prefix": "gdg_service_tweet_2",
+	"Create explicit socket observable": {
+		"prefix": "dug_service_tweet_2",
 		"body": [
-			"this.tweets = http.get('http://localhost:3000/tweets')",
-			".mergeMap(response => {",
-			" return Observable.create((observer) => {",
-			"   let tweets = response.json() || [];",
-			"   observer.next(tweets)",
-			"   socket.on('tweet', (tweet) => {",
-			"     tweets.unshift(tweet);",
-			"     if (tweets.length > 100)",
-			"       tweets.splice(100);",
-			"     observer.next(tweets);",
-			"   });",
-			" });",
+			"let emit = Observable.create(observer => {",
+			"  socket.on('tweet', (tweet) => {",
+			"    observer.next(tweet);",
+			"  });",
 			"});"
 		],
-		"description": "Twitter with merge map"
+		"description": "Create explicit socket observable"
+	},
+	"Get list of tweets": {
+		"prefix": "dug_service_tweet_3",
+		"body": [
+			"get.subscribe(tweets => this.tweets.next(tweets));"
+		],
+		"description": "Get list of tweets"
+	},
+	"Consume tweets": {
+		"prefix": "dug_service_tweet_3",
+		"body": [
+			"emit.subscribe(tweet => {",
+			"  let tweets = this.tweets.value;",
+			"  tweets.unshift(tweet);",
+			"",
+			"  if (tweets.length > 100)",
+			"    tweets.splice(100);",
+			"",
+			"  this.tweets.next(tweets);",
+			"});"
+		],
+		"description": "Consume tweets"
 	},
 	"AppComponent Twitter Stream": {
-		"prefix": "gdg_app_1",
+		"prefix": "dug_app_1",
 		"body": [
 			"constructor(public stream: StreamService) { }"
 		],
 		"description": "Twitter with merge map"
 	},
 	"AppComponent masonry declaration": {
-		"prefix": "gdg_app_declare_masonry",
+		"prefix": "dug_app_declare_masonry",
 		"body": [
 			"declare let Masonry: any;"
 		],
 		"description": "Twitter masonry declaration"
 	},
 	"AppComponent masonry initialise": {
-		"prefix": "gdg_app_new_masonry",
+		"prefix": "dug_app_new_masonry",
 		"body": [
 			"var masonry = new Masonry('app-root', {",
 			" itemSelector: '.EmbeddedTweet'",
@@ -166,7 +170,7 @@
 		"description": "Twitter masonry initialise"
 	},
 	"AppComponent masonry subscribe": {
-		"prefix": "gdg_app_masonry_subscribe",
+		"prefix": "dug_app_masonry_subscribe",
 		"body": [
 			"this.stream.tweets.debounceTime(1).subscribe(x => {",
 			" masonry.reloadItems();",

@@ -15,21 +15,21 @@
 	}
 */
 	"Ping initial markup": {
-		"prefix": "gdg_ping",
+		"prefix": "dug_ping",
 		"body": [
 			"<div class=\"dot\" [class.ping]=\"shouldPing\"></div>"
 		],
 		"description": "Ping initial markup"
 	},
 	"Ping final markup": {
-		"prefix": "gdg_ping_final",
+		"prefix": "dug_ping_final",
 		"body": [
 			"<div class=\"dot\" [class.ping]=\"stream.ping | async\"></div>"
 		],
 		"description": "Ping final markup"
 	},
 	"Tweets initial markup": {
-		"prefix": "gdg_app_1",
+		"prefix": "dug_app_1",
 		"body": [
 			"<div *ngFor=\"let tweet of stream.tweets | async\">",
 			"  {{tweet.text}}",
@@ -38,7 +38,7 @@
 		"description": "Tweets initial markup"
 	},
 	"Tweets final markup": {
-		"prefix": "gdg_app_2",
+		"prefix": "dug_app_2",
 		"body": [
 			"<app-tweet *ngFor=\"let tweet of stream.tweets | async\" [tweet]=\"tweet\">",
 			"</app-tweet>"
@@ -46,7 +46,7 @@
 		"description": "Tweets final markup"
 	},
 	"Tweet markup": {
-		"prefix": "gdg_tweet",
+		"prefix": "dug_tweet",
 		"body": [
 			"<div class=\"EmbeddedTweet\">",
 			"  <div class=\"EmbeddedTweet-tweet\">",

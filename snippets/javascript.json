@@ -15,7 +15,7 @@
 	}
 */
 	"Initialise express": {
-		"prefix": "gdg_express",
+		"prefix": "dug_express",
 		"body": [
 			"var app = require('express')();",
 			"var server = require('http').createServer(app);",
@@ -26,14 +26,14 @@
 		"description": "Initialise the express application"
 	},
 	"Set the ping": {
-		"prefix": "gdg_ping",
+		"prefix": "dug_ping",
 		"body": [
 			"setInterval(() => io.emit('ping'), 3000);"
 		],
 		"description": "Set the socketio ping"
 	},
 	"Configure the twitter api": {
-		"prefix": "gdg_twitter_config",
+		"prefix": "dug_twitter_config",
 		"body": [
 			"let Twit = require('twit');",
 			"let T = new Twit({",
@@ -47,12 +47,12 @@
 		"description": "Configure the twitter api"
 	},
 	"Set up the twitter stream": {
-		"prefix": "gdg_twitter_stream",
+		"prefix": "dug_twitter_stream",
 		"body": [
 			"let stream = T.stream('statuses/filter', {",
 			"  track: [",
-			"    '@googledevs',",
-			"    '@GDEJohannesburg',",
+			"    '@wethinkcode',",
+			"    '@BBDSoftware',",
 			"    '@mikegeyser'",
 			"  ].join(','),",
 			"  language: 'en'",
@@ -61,7 +61,7 @@
 		"description": "Set up the twitter stream"
 	},
 	"Emit received tweets": {
-		"prefix": "gdg_tweet_emit",
+		"prefix": "dug_tweet_emit",
 		"body": [
 			"stream.on('tweet', (status) => {",
 			"  console.log(status);",
@@ -71,7 +71,7 @@
 		"description": "Emit received tweets"
 	},
 	"Store the tweet in an array": {
-		"prefix": "gdg_tweet_store",
+		"prefix": "dug_tweet_store",
 		"body": [
 			"let tweets = [];",
 			"stream.on('tweet', (status) => {",
@@ -86,7 +86,7 @@
 		"description": "Store the tweet in an array"
 	},
 	"Get all tweets so far": {
-		"prefix": "gdg_get_all",
+		"prefix": "dug_get_all",
 		"body": [
 			"var cors = require('cors');",
 			"app.use(cors())",
