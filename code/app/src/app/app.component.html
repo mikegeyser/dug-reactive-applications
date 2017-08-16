@@ -1,0 +1,4 @@
+<app-ping></app-ping>
+
+<app-tweet *ngFor="let tweet of stream.tweets | async" [tweet]="tweet">
+</app-tweet>
