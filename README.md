@@ -1,7 +1,7 @@
 # Building Reactive Applications with Angular, RxJS and Socket.IO
 <img align="left" src="https://secure.meetupstatic.com/photos/event/c/5/3/2/global_166130482.jpeg">
 
-A talk for the Developer User Group on 16 August 2017
+[A talk for the Developer User Group on 16 August 2017](https://www.meetup.com/DeveloperUG/events/241838974/)
 
 We have been building client-server web applications using the same paradigms since bellbottoms, disco and IBM were popular. Everything since then has been a rehash of RPC and Request-Response, with JSON + REST being just the latest incarnation. We can do better. We now have the tools available to challenge those paradigms and build a new breed of application. Using reactive programming techniques and data streaming we can easily build rich, reactive web applications. 
 This code-oriented talk will show how to use Socket.IO to stream data to an Angular application. It will cover websocket basics, RxJS and working observables, as well as how it all seamlessly fits into Angular’s data-binding. 
