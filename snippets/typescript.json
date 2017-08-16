@@ -132,7 +132,7 @@
 		"description": "Get list of tweets"
 	},
 	"Consume tweets": {
-		"prefix": "dug_service_tweet_3",
+		"prefix": "dug_service_tweet_4",
 		"body": [
 			"emit.subscribe(tweet => {",
 			"  let tweets = this.tweets.value;",
